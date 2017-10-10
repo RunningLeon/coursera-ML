@@ -21,5 +21,10 @@ figure; % open a new figure window
 
 
 % ============================================================
-
+plot(x, y, 'bx', 'MarkerSize', 10); % Plot the data
+ylabel('Profit in $10,000s'); % Set the y-axis label
+xlabel('Population of City in 10,000s'); % Set the x-axis label
+title('Profit VS Population'); % Set title
+% legend('');
+% print -dpng 'data1.png'  %Save figure as png
 end
