@@ -83,15 +83,25 @@ fprintf('Running gradient descent ...\n');
 
 % Choose some alpha value
 alpha = 0.01;
+%alpha = [0.01 0.1 1];
 num_iters = 400;
+%num_iters = [50 200 400];
+%line_types = ['xr' '-r' '.'];
 
-% Init Theta and Run Gradient Descent 
+% Init Theta and Run Gradient Descent
+
+% Try use three alpha and three iterations 
+%for i=1:3
 theta = zeros(3, 1);
 [theta, J_history] = gradientDescentMulti(X, y, theta, alpha, num_iters);
+%[theta, J_history] = gradientDescentMulti(X, y, theta, alpha(i), num_iters(i));
 
 % Plot the convergence graph
 figure;
-plot(1:numel(J_history), J_history, '-b', 'LineWidth', 2);
+plot(1:numel(J_history), J_history, '-r', 'LineWidth', 2);
+%plot(1:numel(J_history), J_history, line_types(i), 'LineWidth', 2);
+%hold on;
+%end
 xlabel('Number of iterations');
 ylabel('Cost J');
 
@@ -105,7 +115,11 @@ fprintf('\n');
 % Recall that the first column of X is all-ones. Thus, it does
 % not need to be normalized.
 price = 0; % You should change this
-
+input_x = [1650 3];
+input_x = (input_x - mu)./sigma;
+fprintf(['input_x ..$%f\n'],size(input_x));
+input_x = [1 input_x];
+price = input_x*theta;
 
 % ============================================================
 
@@ -150,7 +164,9 @@ fprintf('\n');
 % Estimate the price of a 1650 sq-ft, 3 br house
 % ====================== YOUR CODE HERE ======================
 price = 0; % You should change this
-
+theta = normalEqn(X,y);
+x1 = [1 1650 3];
+price = x1*theta;
 
 % ============================================================
 
