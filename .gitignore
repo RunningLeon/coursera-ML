@@ -2,4 +2,5 @@
 .idea/
 *workspace*
 *.mat
-.idea/
+.ipynb_checkpoints/
+lib/
