@@ -15,6 +15,12 @@ p = zeros(m, 1);
 %               You should set p to a vector of 0's and 1's
 %
 
+p = sigmoid(X*theta);
+%fprintf("%f\n",p(1:10));
+pos_idx = find(p>=0.5);
+neg_idx = find(p<0.5);
+p(pos_idx) = ones(size(pos_idx,1),1)';
+p(neg_idx) = ones(size(neg_idx,1),1)' - 1;
 
 
 
