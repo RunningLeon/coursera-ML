@@ -24,7 +24,7 @@ Theta2 = reshape(nn_params((1 + (hidden_layer_size * (input_layer_size + 1))):en
 
 % Setup some useful variables
 m = size(X, 1);
-         
+n = size(X, 2);         
 % You need to return the following variables correctly 
 J = 0;
 Theta1_grad = zeros(size(Theta1));
@@ -61,8 +61,47 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
+% add one to X
+a1 = [ones(m, 1) X];
+% compute a2
+z2 = a1*Theta1';
+a2 = [ones(m,1) sigmoid(z2)];
+z3 = a2*Theta2';
+a3 = sigmoid(z3);
+hThetaX = a3;
 
 
+yVec = zeros(m,num_labels);
+for i=1:m
+  yVec(i,y(i)) = 1;
+end
+
+
+%J = 1/m * sum(sum(-1 * yVec .* log(hThetaX)-(1-yVec) .* log(1-hThetaX)));
+J = 1/m*sum(sum(-yVec.*log(hThetaX) - (1-yVec).*log(1-hThetaX)));
+regularator = (sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2))) * (lambda/(2*m));
+fprintf("f %f",size(J));
+J = J + regularator;
+% part 2
+for i = 1:m
+  a1 = [1;X(i,:)'];
+  z2 = Theta1*a1;
+  a2 = [1;sigmoid(z2)];
+  
+  z3 = Theta2*a2;
+  a3 = sigmoid(z3);
+  
+  yy = ([1:num_labels]==y(i))';
+  delta3 = a3 - yy;
+  delta2 = (Theta2'*delta3).*[1;sigmoidGradient(z2)];
+  delta2 = delta2(2:end); %Taking off the bias row
+  
+  Theta1_grad += delta2*a1';
+  Theta2_grad += delta3*a2';
+end
+
+Theta1_grad = (1/m) * Theta1_grad + (lambda/m) * [zeros(size(Theta1, 1), 1) Theta1(:,2:end)];
+Theta2_grad = (1/m) * Theta2_grad + (lambda/m) * [zeros(size(Theta2, 1), 1) Theta2(:,2:end)];
 
 
 
