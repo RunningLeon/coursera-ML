@@ -80,11 +80,14 @@ end
 %J = 1/m * sum(sum(-1 * yVec .* log(hThetaX)-(1-yVec) .* log(1-hThetaX)));
 J = 1/m*sum(sum(-yVec.*log(hThetaX) - (1-yVec).*log(1-hThetaX)));
 regularator = (sum(sum(Theta1(:,2:end).^2)) + sum(sum(Theta2(:,2:end).^2))) * (lambda/(2*m));
-fprintf("f %f",size(J));
+%fprintf("f %f",size(J));
 J = J + regularator;
+
+
 % part 2
 for i = 1:m
   a1 = [1;X(i,:)'];
+  
   z2 = Theta1*a1;
   a2 = [1;sigmoid(z2)];
   
