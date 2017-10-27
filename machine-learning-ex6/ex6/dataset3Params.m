@@ -30,18 +30,22 @@ for i = 1:len
   for j = 1:len
     sigma = params(j);
     model= svmTrain(X, y, C, @(x1, x2) gaussianKernel(x1, x2, sigma)); 
-    err = mean(double(svmPredict(model, Xval) ~= yval));
+    predictions = svmPredict(model, Xval);
+    err = mean(double(predictions ~= yval));
     k += 1;
     results(k,:) = [C sigma err];
-  end
-end
+  endfor
+  if k == 8
+    break
+  endif
+endfor
 
 % sort matrix by columns # 3
-sorted_results = sortrows(results, 3);
+results = sortrows(results, 3);
 C = results(1, 1);
 sigma = results(1, 2);
 
-fprintf('C %f, sigma: %f',C,sigma);
+fprintf('C %.4f, sigma: %.4f',C,sigma);
 
 
 
