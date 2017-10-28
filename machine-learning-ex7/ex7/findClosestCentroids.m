@@ -20,7 +20,35 @@ idx = zeros(size(X,1), 1);
 %
 % Note: You can use a for-loop over the examples to compute this.
 %
+m = size(X,1);
+% method one with two loops
 
+%for i = 1:m
+%  x_i = X(i,:);
+%  distances = zeros(K,1);
+%  for j = 1:K
+%    centroid_j = centroids(j,:);
+%    dis = 1/m*sum((x_i - centroid_j).^2);
+%    distances(j) = dis;
+%  endfor
+%  [val k] = min(distances);
+%  idx(i) = k; 
+%endfor
+
+% method two with one loop
+J = zeros(m,K);
+for i = 1:K
+  % create a m x size(centroids,2) matrix with centroid(i,:) repeated m times;
+  repCentroids = repmat(centroids(i,:), m, 1);
+  % add Ji of ith centroids and X to J
+  J(:, i) = 1/m*sum((X - repCentroids).^2,2);
+endfor
+
+% idxT is a vector contains the indices of min value in each column of J transpose;
+[val idxT] = min(J');
+idx = idxT';
+
+% fprintf("size idx:%f",size(idx)); 
 
 
 
