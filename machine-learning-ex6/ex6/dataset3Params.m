@@ -35,9 +35,6 @@ for i = 1:len
     k += 1;
     results(k,:) = [C sigma err];
   endfor
-  if k == 8
-    break
-  endif
 endfor
 
 % sort matrix by columns # 3
