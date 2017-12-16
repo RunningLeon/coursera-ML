@@ -1,5 +1,6 @@
 # Coursera Machine Learning 
 ----
+--------
 Here are implemmented excercises with Octave and python while I'm taking course of Machine Learning by Andrew Ng on Coursera
 
 ### Exercises List:
